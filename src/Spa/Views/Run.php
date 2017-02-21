@@ -10,12 +10,26 @@ class Spa_Views_Run
 {
 
     /**
+     * Load default spa
+     * 
+     * @param Pluf_HTTP_Request $request
+     * @param array $match
+     * @return Pluf_HTTP_Response_File|Pluf_HTTP_Response
+     */
+    public static function defaultSpa ($request, $match)
+    {
+        $name = Setting_Service::get('spa.default', 'start');
+        $spa = Spa_SPA::getSpaByName($name);
+        return self::loadSpaResource($request, $spa);
+    }
+
+    /**
      * Loads SPA (by name) or resource (by name).
      * First search for SPA with specified name.
      * If such SPA is not found search for resource file with specified name in
      * default SPA of tenant.
      *
-     * @param unknown $request            
+     * @param Pluf_HTTP_Request $request            
      * @param array $match            
      * @return Pluf_HTTP_Response_File|Pluf_HTTP_Response
      */
@@ -35,32 +49,24 @@ class Spa_Views_Run
         return self::loadSpaResource($request, $spa, $resource);
     }
 
-    public static function defaultSpa ($request, $match)
-    {
-        $name = Setting_Service::get('spa.default', 'start');
-        $spa = Spa_SPA::getSpaByName($name);
-        return self::loadSpaResource($request, $spa);
-    }
-
-    public static function getResource ($request, $match)
+    /**
+     * Load a resource from SPA
+     * 
+     * @param Pluf_HTTP_Request $request
+     * @param array $match
+     * @return Pluf_HTTP_Response_File|Pluf_HTTP_Response
+     */
+    public static function loadResource ($request, $match)
     {
         // Load data
         $resourcePath = $match['resource'];
         $spa = Spa_SPA::getSpaByName($match['spa']);
-        if(!isset($spa)){
+        if (! isset($spa)) {
             $name = Setting_Service::get('spa.default', 'start');
             $spa = Spa_SPA::getSpaByName($name);
-            $resourcePath = $match['spa'].'/'.$resourcePath;
+            $resourcePath = $match['spa'] . '/' . $resourcePath;
         }
         return self::loadSpaResource($request, $spa, $resourcePath);
-    }
-
-    protected static function loadSpa ($request, $spa)
-    {
-        // نمایش اصلی
-        $mainPage = $spa->getMainPagePath();
-        return new Pluf_HTTP_Response_File($mainPage, 
-                Pluf_FileUtil::getMimeType($mainPage));
     }
 
     /**
@@ -70,9 +76,8 @@ class Spa_Views_Run
      * default main page of
      * SPA is used.
      *
-     * @param unknown $request            
-     * @param Pluf_Tenant $tenant            
-     * @param SPA $spa            
+     * @param Pluf_HTTP_Request $request            
+     * @param Spa_SPA $spa            
      * @param string $resource            
      * @throws Pluf_EXception if tenant is null or spa could not be found.
      * @return Pluf_HTTP_Response_File|Pluf_HTTP_Response|Pluf_HTTP_Response_File
@@ -80,15 +85,10 @@ class Spa_Views_Run
     protected static function loadSpaResource ($request, $spa = null, 
             $resource = null)
     {
-        // Resource
         if (! isset($resource)) {
-            return self::loadSpa($request, $spa);
-        }
-        // TODO: Check access
-        $resPath = $spa->getResourcePath($resource);
-        if (! $resPath) {
-            // Try to load resource form assets directory of platform
-            $resPath = Spa_SPA::getAssetsPath($resource);
+            $resPath = $spa->getMainPagePath();
+        } else {
+            $resPath = $spa->getResourcePath($resource);
         }
         return new Pluf_HTTP_Response_File($resPath, 
                 Pluf_FileUtil::getMimeType($resPath));
