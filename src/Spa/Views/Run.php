@@ -85,6 +85,9 @@ class Spa_Views_Run
     protected static function loadSpaResource ($request, $spa = null, 
             $resource = null)
     {
+        if(!isset($spa)){
+            $spa = Spa_Service::getNotfoundSpa();
+        }
         if (! isset($resource)) {
             $resPath = $spa->getMainPagePath();
         } else {

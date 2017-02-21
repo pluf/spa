@@ -31,24 +31,25 @@ class Spa_Service
         $name = 'not-found';
         $spa = Spa_SPA::getSpaByName($name);
         if (! isset($spa)) {
-            // TODO: maso, 2017: install not-found SPA and return
+            return self::installFromFile(__DIR__ . '/resources/not-found.zip');
         }
         return $spa;
     }
 
     /**
      * Install spa from file into the tenant.
-     * 
-     * @param String $path
-     * @param string $deleteFile
+     *
+     * @param String $path            
+     * @param string $deleteFile            
      * @throws Pluf_Exception
      */
     public static function installFromFile ($path, $deleteFile = false)
     {
         // Temp folder
-        $key = 'spa-'. md5(microtime() . rand(0, 123456789) . Pluf::f('secret_key'));
-        $dir = Pluf_Tenant::storagePath() . '/spa/' .$key;
-        if (!mkdir($dir, 0777, true)) {
+        $key = 'spa-' .
+                 md5(microtime() . rand(0, 123456789) . Pluf::f('secret_key'));
+        $dir = Pluf_Tenant::storagePath() . '/spa/' . $key;
+        if (! mkdir($dir, 0777, true)) {
             throw new Pluf_Exception('Failed to create folder in temp');
         }
         
