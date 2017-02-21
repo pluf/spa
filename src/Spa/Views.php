@@ -42,43 +42,16 @@ class Spa_Views extends Pluf_Views
     public function create ($request, $match)
     {
         // 1- upload & extract
-        $path = Pluf_Tenant::storagePath() . '/spa/tmp';
+        $key = 'spa-' . md5(microtime() . rand(0, 123456789));
         Pluf_Form_Field_File_moveToUploadFolder($request->FILES['file'], 
                 array(
-                        'file_name' => 'spa.zip',
-                        'upload_path' => $path,
+                        'file_name' => $key . '.zip',
+                        'upload_path' => Pluf::f('temp_folder', '/tmp'),
                         'upload_path_create' => true,
                         'upload_overwrite' => true
                 ));
-        $zip = new ZipArchive();
-        if ($zip->open($path . '/spa.zip') === TRUE) {
-            $zip->extractTo($path);
-            $zip->close();
-        } else {
-            throw new Pluf_Exception('Unable to unzip SPA.');
-        }
-        unlink($path . '/spa.zip');
-        
-        // 2- load infor
-        $filename = $path . '/' . Pluf::f('spa_config', "spa.json");
-        $myfile = fopen($filename, "r") or die("Unable to open file!");
-        $json = fread($myfile, filesize($filename));
-        fclose($myfile);
-        $package = json_decode($json, true);
-        
-        // 3- crate spa
-        $spa = new Spa_SPA();
-        $spa->path = $path;
-        $spa->setFromFormData($package);
-        $spa->create();
-        
-        $spa->path = Pluf_Tenant::storagePath() . '/spa/' .
-                 $spa->id;
-        $spa->update();
-        
-        Pluf_FileUtil::removedir($spa->path);
-        rename($path, $spa->path);
-        
+        $spa = Spa_Service::installFromFile(
+                Pluf::f('temp_folder', '/tmp') . '/' . $key . '.zip', true);
         return new Pluf_HTTP_Response_Json($spa);
     }
 
