@@ -31,7 +31,7 @@ return array(
     array(
         'regex' => '#^/(?P<spa>[^/]+)/(?P<resource>.*)$#',
         'model' => 'Spa_Views_Run',
-        'method' => 'getResource'
+        'method' => 'loadResource'
     ),    
     // main page of default SPA
     array(
