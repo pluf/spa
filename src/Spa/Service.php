@@ -31,7 +31,7 @@ class Spa_Service
         $name = 'not-found';
         $spa = Spa_SPA::getSpaByName($name);
         if (! isset($spa)) {
-            return self::installFromFile(__DIR__ . '/resources/not-found.zip');
+            return self::installFromFile(__DIR__ . '/resources/not-found-0.1.1.zip');
         }
         return $spa;
     }
