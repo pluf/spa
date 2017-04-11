@@ -58,7 +58,7 @@ class Spa_Views_Run
         // Looking for file in default spa
         $name = Setting_Service::get('spa.default', 'not-found');
         $spa = Spa_SPA::getSpaByName($name);
-        $resPath = $spa->getResourcePath($spaName . '/' . $resourcePath);
+        $resPath = $spa->getResourcePath($match[0]);
         if (file_exists($resPath)) {
             return new Pluf_HTTP_Response_File($resPath, 
                     Pluf_FileUtil::getMimeType($resPath));
@@ -67,7 +67,7 @@ class Spa_Views_Run
         $spa = Spa_Service::getNotfoundSpa();
         
         // Looking for file in notfound spa
-        $w = '/'.$resourcePath;
+        $w = $match[0];
         do {
             $w = substr($w, strpos($w, '/')+1);
             $resPath = $spa->getResourcePath($w);
