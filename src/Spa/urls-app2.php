@@ -17,13 +17,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 return array(
-    // url format for SPA main page or a Resource-File of default spa
-    // main page of a spa:               /spa-name
-    // resource-file from default spa:   /resource-file
+    // main page of default SPA
     array(
-        'regex' => '#^/(?P<path>[^/]+)$#',
+        'regex' => '#^/$#',
         'model' => 'Spa_Views_Run',
-        'method' => 'loadSpaOrResource'
+        'method' => 'defaultSpa'
     ),
     // url format for SPA resources:    
     // resource from default spa: /path/to/resource
@@ -32,11 +30,10 @@ return array(
         'regex' => '#^/(?P<spa>[^/]+)/(?P<resource>.*)$#',
         'model' => 'Spa_Views_Run',
         'method' => 'loadResource'
-    ),    
-    // main page of default SPA
+    ),
     array(
-        'regex' => '#^/$#',
-        'model' => 'Spa_Views_Run',
-        'method' => 'defaultSpa'
-    )
+            'regex' => '#^/(?P<spa>[^/]+)$#',
+            'model' => 'Spa_Views_Run',
+            'method' => 'loadResource'
+    ),
 );
