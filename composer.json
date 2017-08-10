@@ -17,7 +17,8 @@
 	],
 	"minimum-stability" : "stable",
 	"require" : {
-		"pluf/core" : "^2.0.2"
+		"pluf/core" : "^2.0.2",
+		"pluf/workflow" : "^2.0.2"
 	},
 	"include-path" : [
 		"src/"

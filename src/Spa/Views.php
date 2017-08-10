@@ -36,8 +36,8 @@ class Spa_Views extends Pluf_Views
      * اطلاعات از توی فایل برداشته می‌شه. این فایل باید ساختار نرم افزارهای ما
      * رو داشته باشه.
      *
-     * @param unknown_type $request            
-     * @param unknown_type $match            
+     * @param Pluf_HTTP_Request $request            
+     * @param array $match            
      */
     public function create ($request, $match)
     {
@@ -57,8 +57,8 @@ class Spa_Views extends Pluf_Views
 
     /**
      *
-     * @param unknown_type $request            
-     * @param unknown_type $match            
+     * @param Pluf_HTTP_Request $request            
+     * @param array $match           
      */
     public function update ($request, $match)
     {
@@ -97,8 +97,8 @@ class Spa_Views extends Pluf_Views
 
     /**
      *
-     * @param unknown_type $request            
-     * @param unknown_type $match            
+     * @param Pluf_HTTP_Request $request            
+     * @param array $match          
      */
     public function delete ($request, $match)
     {
