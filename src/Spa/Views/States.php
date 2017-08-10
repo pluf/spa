@@ -1,4 +1,5 @@
 <?php
+Pluf::loadFunction('Pluf_Shortcuts_GetObjectOr404');
 Pluf::loadFunction('Spa_Shortcuts_SpaManager');
 
 /**
@@ -18,7 +19,7 @@ class Spa_Views_States extends Pluf_Views
      */
     public function find($request, $match)
     {
-        $spa = Pluf_Shortcuts_GetOneOr404('Spa_SPA', $match['modelId']);
+        $spa = Pluf_Shortcuts_GetObjectOr404('Spa_SPA', $match['modelId']);
         return Spa_Shortcuts_SpaManager($spa)->states($spa);
     }
 
@@ -45,7 +46,7 @@ class Spa_Views_States extends Pluf_Views
      */
     public function put($request, $match)
     {
-        $spa = Pluf_Shortcuts_GetOneOr404('Spa_SPA', $match['modelId']);
+        $spa = Pluf_Shortcuts_GetObjectOr404('Spa_SPA', $match['modelId']);
         return Spa_Shortcuts_SpaManager($spa)->apply($spa, $match['stateId']);
     }
 }

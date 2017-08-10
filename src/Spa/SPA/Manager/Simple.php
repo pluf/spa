@@ -118,7 +118,15 @@ class Spa_SPA_Manager_Simple implements Spa_SPA_Manager
      * @param Spa_SPA $object
      */
     public static function checkUpdate($request, $object)
-    {}
+    {
+        $repo = new Spa_Views_Repository();
+        $spa = $repo->get(new Pluf_HTTP_Request('/'), array(
+            'modelId' => $object->name
+        ));
+        $object->last_version = $spa->version;
+        $object->update();
+        return $object;
+    }
 
     /**
      * Update an spa

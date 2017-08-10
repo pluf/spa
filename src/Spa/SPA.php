@@ -68,6 +68,13 @@ class Spa_SPA extends Pluf_Model
                         'readable' => true,
                         'editable' => false
                 ),
+                'last_version' => array(
+                        'type' => 'Pluf_DB_Field_Varchar',
+                        'blank' => false,
+                        'size' => 100,
+                        'readable' => true,
+                        'editable' => false
+                ),
                 'title' => array(
                         'type' => 'Pluf_DB_Field_Varchar',
                         'blank' => true,

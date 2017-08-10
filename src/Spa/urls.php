@@ -70,7 +70,7 @@ return array(
     
     array(
         'regex' => '#^/(?P<modelId>\d+)/states$#',
-        'model' => 'Pluf_Views_States',
+        'model' => 'Spa_Views_States',
         'method' => 'find',
         'http-method' => 'GET',
         'precond' => array(
@@ -79,7 +79,7 @@ return array(
     ),
     array(
         'regex' => '#^/(?P<modelId>\d+)/states/(?P<stateId>.+)$#',
-        'model' => 'Pluf_Views_States',
+        'model' => 'Spa_Views_States',
         'method' => 'get',
         'http-method' => 'GET',
         'precond' => array(
@@ -88,7 +88,7 @@ return array(
     ),
     array(
         'regex' => '#^/(?P<modelId>\d+)/states/(?P<stateId>.+)$#',
-        'model' => 'Pluf_Views_States',
+        'model' => 'Spa_Views_States',
         'method' => 'put',
         'http-method' => 'PUT',
         'precond' => array(
@@ -98,7 +98,7 @@ return array(
     
     array(
         'regex' => '#^/(?P<modelId>\d+)/resources$#',
-        'model' => 'Pluf_Views_Resources',
+        'model' => 'Spa_Views_Resources',
         'method' => 'find',
         'http-method' => 'GET',
         'precond' => array(
@@ -107,7 +107,7 @@ return array(
     ),
     array(
         'regex' => '#^/(?P<modelId>\d+)/resources/new$#',
-        'model' => 'Pluf_Views_Resources',
+        'model' => 'Spa_Views_Resources',
         'method' => 'create',
         'http-method' => 'GET',
         'precond' => array(
@@ -116,7 +116,7 @@ return array(
     ),
     array(
         'regex' => '#^/(?P<modelId>\d+)/resources/(?P<resourcePath>.+)$#',
-        'model' => 'Pluf_Views_Resources',
+        'model' => 'Spa_Views_Resources',
         'method' => 'get',
         'http-method' => 'GET',
         'precond' => array(
@@ -125,7 +125,7 @@ return array(
     ),
     array(
         'regex' => '#^/(?P<modelId>\d+)/resources/(?P<resourcePath>.+)$#',
-        'model' => 'Pluf_Views_Resources',
+        'model' => 'Spa_Views_Resources',
         'method' => 'update',
         'http-method' => 'POST',
         'precond' => array(
@@ -134,7 +134,7 @@ return array(
     ),
     array(
         'regex' => '#^/(?P<modelId>\d+)/resources/(?P<resourcePath>.+)$#',
-        'model' => 'Pluf_Views_Resources',
+        'model' => 'Spa_Views_Resources',
         'method' => 'delete',
         'http-method' => 'Delete',
         'precond' => array(
