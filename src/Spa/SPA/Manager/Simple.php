@@ -1,16 +1,15 @@
 <?php
-
 Pluf::loadFunction('Marketplace_Shortcuts_SpaUpdate');
 
 /**
  * Simple SPA management
  *
  * @author maso<mostafa.barmshory@dpq.co.ir>
- *
+ *        
  */
 class Spa_SPA_Manager_Simple implements Spa_SPA_Manager
 {
-    
+
     /**
      * State machine of spa
      *
@@ -19,14 +18,7 @@ class Spa_SPA_Manager_Simple implements Spa_SPA_Manager
     static $STATE_MACHINE = array(
         Workflow_Machine::STATE_UNDEFINED => array(
             'next' => 'Enable',
-            'visible' => false,
-            'preconditions' => array(
-                'Pluf_Precondition::isOwner'
-            ),
-            'action' => array(
-                'Spa_SPA_Manager_Simple',
-                'install'
-            ),
+            'visible' => false
         ),
         // State
         'Enable' => array(
@@ -74,9 +66,9 @@ class Spa_SPA_Manager_Simple implements Spa_SPA_Manager
             )
         ),
         'Disabled' => array(),
-        'Deleted' => array(),
+        'Deleted' => array()
     );
-    
+
     /**
      *
      * {@inheritdoc}
@@ -84,11 +76,9 @@ class Spa_SPA_Manager_Simple implements Spa_SPA_Manager
      */
     public function filter($request)
     {
-        return new Pluf_SQL("state=%s", array(
-            "publised"
-        ));
+        return new Pluf_SQL("true");
     }
-    
+
     /**
      *
      * {@inheritdoc}
@@ -98,14 +88,14 @@ class Spa_SPA_Manager_Simple implements Spa_SPA_Manager
     {
         $machine = new Workflow_Machine();
         $machine->setStates(self::$STATE_MACHINE)
-        ->setSignals(array(
+            ->setSignals(array(
             'Spa_SPA::stateChange'
         ))
-        ->setProperty('state')
-        ->apply($spa, $action);
+            ->setProperty('state')
+            ->apply($spa, $action);
         return true;
     }
-    
+
     /**
      *
      * {@inheritdoc}
@@ -120,7 +110,7 @@ class Spa_SPA_Manager_Simple implements Spa_SPA_Manager
         }
         return $states;
     }
-    
+
     /**
      * Check update of an spa
      *
@@ -128,9 +118,8 @@ class Spa_SPA_Manager_Simple implements Spa_SPA_Manager
      * @param Spa_SPA $object
      */
     public static function checkUpdate($request, $object)
-    {
-    }
-    
+    {}
+
     /**
      * Update an spa
      *
@@ -138,16 +127,5 @@ class Spa_SPA_Manager_Simple implements Spa_SPA_Manager
      * @param Spa_SPA $object
      */
     public static function update($request, $object)
-    {
-    }
-    
-    /**
-     * Install an spa
-     *
-     * @param Pluf_HTTP_Request $request
-     * @param Spa_SPA $object
-     */
-    public static function install($request, $object)
-    {
-    }
+    {}
 }
