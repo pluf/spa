@@ -17,9 +17,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 return array(
+    
     array(
-        'regex' => '#^/repository/find$#',
-        'model' => 'Pluf_Views_Repository',
+        'regex' => '#^/repository/(?P<modelId>.+)/states$#',
+        'model' => 'Spa_Views_Repository_States',
         'method' => 'find',
         'http-method' => 'GET',
         'precond' => array(
@@ -27,18 +28,28 @@ return array(
         )
     ),
     array(
-        'regex' => '#^/repository/(?P<modelId>\d+)$#',
-        'model' => 'Pluf_Views_Repository',
+        'regex' => '#^/repository/(?P<modelId>.+)/states/(?P<stateId>.+)$#',
+        'model' => 'Spa_Views_Repository_States',
         'method' => 'get',
         'http-method' => 'GET',
+        'precond' => array(
+            'Pluf_Precondition::ownerRequired'
+        )
+    ),
+    array(
+        'regex' => '#^/repository/(?P<modelId>\d+)/states/(?P<stateId>.+)$#',
+        'model' => 'Spa_Views_Repository_States',
+        'method' => 'put',
+        'http-method' => 'PUT',
         'precond' => array(
             'Pluf_Precondition::ownerRequired'
         )
     ),
     
+    
     array(
-        'regex' => '#^/repository/(?P<modelId>\d+)/states$#',
-        'model' => 'Pluf_Views_Repository_States',
+        'regex' => '#^/repository/find$#',
+        'model' => 'Spa_Views_Repository',
         'method' => 'find',
         'http-method' => 'GET',
         'precond' => array(
@@ -46,19 +57,10 @@ return array(
         )
     ),
     array(
-        'regex' => '#^/repository/(?P<modelId>\d+)/states/(?P<stateId>.+)$#',
-        'model' => 'Pluf_Views_Repository_States',
+        'regex' => '#^/repository/(?P<modelId>.+)$#',
+        'model' => 'Spa_Views_Repository',
         'method' => 'get',
         'http-method' => 'GET',
-        'precond' => array(
-            'Pluf_Precondition::ownerRequired'
-        )
-    ),
-    array(
-        'regex' => '#^/repository/(?P<modelId>\d+)/states/(?P<stateId>.+)$#',
-        'model' => 'Pluf_Views_Repository_States',
-        'method' => 'put',
-        'http-method' => 'PUT',
         'precond' => array(
             'Pluf_Precondition::ownerRequired'
         )

@@ -7,7 +7,7 @@ Pluf::loadFunction('Spa_Shortcuts_SpaManager');
  * @author maso<mostafa.barmshory@dpq.co.ir>
  *        
  */
-class Spa_Views_States extends Pluf_Views
+class Spa_Views_Repository_States extends Pluf_Views
 {
 
     /**
@@ -49,6 +49,7 @@ class Spa_Views_States extends Pluf_Views
     {
         $repo = new Spa_Views_Repository();
         $spa = $repo->get($request, $match);
-        return Spa_Shortcuts_SpaManager($spa)->apply($spa, $match['stateId']);
+        $m = new Spa_SPA_Manager_Remote();
+        return $m->apply($spa, $match['stateId']);
     }
 }
