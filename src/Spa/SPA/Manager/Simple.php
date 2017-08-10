@@ -135,5 +135,16 @@ class Spa_SPA_Manager_Simple implements Spa_SPA_Manager
      * @param Spa_SPA $object
      */
     public static function update($request, $object)
-    {}
+    {
+        // request param
+        $backend = Pluf::f('marketplace.backend', 'http://marketplace.webpich.com');
+        $path = '/api/marketplace/spa/' . $object->name . '/download';
+        $file = Pluf::f('temp_folder', '/tmp') . '/spa-' . rand();
+        // Do request
+        $client = new GuzzleHttp\Client();
+        $response = $client->request('GET', $backend . $path, [
+            'sink' => $file
+        ]);
+        return Spa_Service::updateFromFile($object, $file, true);
+    }
 }

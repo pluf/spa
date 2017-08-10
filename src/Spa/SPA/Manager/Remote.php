@@ -95,7 +95,6 @@ class Spa_SPA_Manager_Remote implements Spa_SPA_Manager
         ]);
         
         // install
-        $spa = Spa_Service::installFromFile($file, true);
-        return $spa;
+        return Spa_Service::installFromFile($file, true);
     }
 }
