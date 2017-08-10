@@ -18,23 +18,35 @@ class Spa_SPA_Manager_Simple implements Spa_SPA_Manager
      */
     static $STATE_MACHINE = array(
         Workflow_Machine::STATE_UNDEFINED => array(
-            'next' => 'Published',
+            'next' => 'Enable',
             'visible' => false,
-            'action' => array(
-                'Marketplace_Spa_Manager_Simple',
-                'update'
-            ),
             'preconditions' => array(
                 'Pluf_Precondition::isOwner'
-            )
+            ),
+            'action' => array(
+                'Spa_SPA_Manager_Simple',
+                'install'
+            ),
         ),
         // State
-        'Published' => array(
-            'update' => array(
-                'next' => 'Published',
-                'visible' => false,
+        'Enable' => array(
+            'checkUpdate' => array(
+                'next' => 'Enable',
+                'visible' => true,
                 'action' => array(
-                    'Marketplace_Spa_Manager_Simple',
+                    'Spa_SPA_Manager_Simple',
+                    'checkUpdate'
+                ),
+                'preconditions' => array(
+                    'Pluf_Precondition::isOwner'
+                ),
+                'properties' => array()
+            ),
+            'update' => array(
+                'next' => 'Enable',
+                'visible' => true,
+                'action' => array(
+                    'Spa_SPA_Manager_Simple',
                     'update'
                 ),
                 'preconditions' => array(
@@ -43,26 +55,26 @@ class Spa_SPA_Manager_Simple implements Spa_SPA_Manager
                 'properties' => array()
             ),
             'read' => array(
-                'next' => 'Published',
-                'visible' => false
-            ),
-            'download' => array(
-                'next' => 'Published',
+                'next' => 'Enable',
                 'visible' => false
             ),
             'delete' => array(
                 'next' => 'Deleted',
-                'visible' => false,
-                'action' => array(
-                    'Marketplace_Spa_Manager_Simple',
-                    'update'
-                ),
+                'visible' => true,
+                'preconditions' => array(
+                    'Pluf_Precondition::isOwner'
+                )
+            ),
+            'disable' => array(
+                'next' => 'Disabled',
+                'visible' => true,
                 'preconditions' => array(
                     'Pluf_Precondition::isOwner'
                 )
             )
         ),
-        'Deleted' => array()
+        'Disabled' => array(),
+        'Deleted' => array(),
     );
     
     /**
@@ -110,6 +122,16 @@ class Spa_SPA_Manager_Simple implements Spa_SPA_Manager
     }
     
     /**
+     * Check update of an spa
+     *
+     * @param Pluf_HTTP_Request $request
+     * @param Spa_SPA $object
+     */
+    public static function checkUpdate($request, $object)
+    {
+    }
+    
+    /**
      * Update an spa
      *
      * @param Pluf_HTTP_Request $request
@@ -117,18 +139,15 @@ class Spa_SPA_Manager_Simple implements Spa_SPA_Manager
      */
     public static function update($request, $object)
     {
-        return Marketplace_Shortcuts_SpaUpdate($request, $object);
     }
     
     /**
-     * Deletes an spa
+     * Install an spa
      *
      * @param Pluf_HTTP_Request $request
      * @param Spa_SPA $object
      */
-    public static function delete($request, $object)
+    public static function install($request, $object)
     {
-        $object->deleted = true;
-        $object->update();
     }
 }

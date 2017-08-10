@@ -47,6 +47,13 @@ class Spa_SPA extends Pluf_Model
                         'type' => 'Pluf_DB_Field_Sequence',
                         'blank' => true
                 ),
+                'state' => array(
+                        'type' => 'Pluf_DB_Field_Varchar',
+                        'blank' => false,
+                        'size' => 50,
+                        'readable' => true,
+                        'editable' => false
+                ),
                 'name' => array(
                         'type' => 'Pluf_DB_Field_Varchar',
                         'blank' => false,
