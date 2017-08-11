@@ -17,80 +17,205 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 return array(
-        array(
-                'regex' => '#^/find$#',
-                'model' => 'Pluf_Views',
-                'method' => 'findObject',
-                'http-method' => 'GET',
-                'precond' => array(),
-                'params' => array(
-                        'model' => 'Spa_SPA',
-                        'listFilters' => array(
-                                'id',
-                                'title',
-                                'symbol'
-                        ),
-                        'listDisplay' => array(
-                                'id' => 'spa id',
-                                'title' => 'title',
-                                'creation_dtime' => 'creation time'
-                        ),
-                        '$searchFields' => array(
-                                'name',
-                                'title',
-                                'description',
-                                'homepage'
-                        ),
-                        'sortFields' => array(
-                                'id',
-                                'name',
-                                'title',
-                                'homepage',
-                                'license',
-                                'version',
-                                'creation_dtime'
-                        ),
-                        'sortOrder' => array(
-                                'creation_dtime',
-                                'DESC'
-                        )
-                )
-        ),
-        array(
-                'regex' => '#^/(?P<modelId>\d+)$#',
-                'model' => 'Pluf_Views',
-                'method' => 'getObject',
-                'http-method' => 'GET',
-                'precond' => array(),
-                'params' => array(
-                        'model' => 'Spa_SPA'
-                )
-        ),
-        array(
-                'regex' => '#^/new$#',
-                'model' => 'Spa_Views',
-                'method' => 'create',
-                'http-method' => 'POST',
-                'precond' => array(
-                        'Pluf_Precondition::ownerRequired'
-                )
-        ),
-        array(
-                'regex' => '#^/(?P<spaId>.+)$#',
-                'model' => 'Spa_Views',
-                'method' => 'update',
-                'http-method' => 'POST',
-                'precond' => array(
-                        'Pluf_Precondition::ownerRequired'
-                )
-        ),
-        array(
-                'regex' => '#^/(?P<spaId>.+)$#',
-                'model' => 'Spa_Views',
-                'method' => 'delete',
-                'http-method' => 'DELETE',
-                'precond' => array(
-                        'Pluf_Precondition::ownerRequired'
-                )
+    
+    array(
+        'regex' => '#^/repository/(?P<modelId>.+)/states$#',
+        'model' => 'Spa_Views_Repository_States',
+        'method' => 'find',
+        'http-method' => 'GET',
+        'precond' => array(
+            'Pluf_Precondition::ownerRequired'
         )
+    ),
+    array(
+        'regex' => '#^/repository/(?P<modelId>.+)/states/(?P<stateId>.+)$#',
+        'model' => 'Spa_Views_Repository_States',
+        'method' => 'get',
+        'http-method' => 'GET',
+        'precond' => array(
+            'Pluf_Precondition::ownerRequired'
+        )
+    ),
+    array(
+        'regex' => '#^/repository/(?P<modelId>\d+)/states/(?P<stateId>.+)$#',
+        'model' => 'Spa_Views_Repository_States',
+        'method' => 'put',
+        'http-method' => 'PUT',
+        'precond' => array(
+            'Pluf_Precondition::ownerRequired'
+        )
+    ),
+    
+    
+    array(
+        'regex' => '#^/repository/find$#',
+        'model' => 'Spa_Views_Repository',
+        'method' => 'find',
+        'http-method' => 'GET',
+        'precond' => array(
+            'Pluf_Precondition::ownerRequired'
+        )
+    ),
+    array(
+        'regex' => '#^/repository/(?P<modelId>.+)$#',
+        'model' => 'Spa_Views_Repository',
+        'method' => 'get',
+        'http-method' => 'GET',
+        'precond' => array(
+            'Pluf_Precondition::ownerRequired'
+        )
+    ),
+    
+    
+    
+    array(
+        'regex' => '#^/(?P<modelId>\d+)/states$#',
+        'model' => 'Spa_Views_States',
+        'method' => 'find',
+        'http-method' => 'GET',
+        'precond' => array(
+            'Pluf_Precondition::ownerRequired'
+        )
+    ),
+    array(
+        'regex' => '#^/(?P<modelId>\d+)/states/(?P<stateId>.+)$#',
+        'model' => 'Spa_Views_States',
+        'method' => 'get',
+        'http-method' => 'GET',
+        'precond' => array(
+            'Pluf_Precondition::ownerRequired'
+        )
+    ),
+    array(
+        'regex' => '#^/(?P<modelId>\d+)/states/(?P<stateId>.+)$#',
+        'model' => 'Spa_Views_States',
+        'method' => 'put',
+        'http-method' => 'PUT',
+        'precond' => array(
+            'Pluf_Precondition::ownerRequired'
+        )
+    ),
+    
+    array(
+        'regex' => '#^/(?P<modelId>\d+)/resources$#',
+        'model' => 'Spa_Views_Resources',
+        'method' => 'find',
+        'http-method' => 'GET',
+        'precond' => array(
+            'Pluf_Precondition::ownerRequired'
+        )
+    ),
+    array(
+        'regex' => '#^/(?P<modelId>\d+)/resources/new$#',
+        'model' => 'Spa_Views_Resources',
+        'method' => 'create',
+        'http-method' => 'GET',
+        'precond' => array(
+            'Pluf_Precondition::ownerRequired'
+        )
+    ),
+    array(
+        'regex' => '#^/(?P<modelId>\d+)/resources/(?P<resourcePath>.+)$#',
+        'model' => 'Spa_Views_Resources',
+        'method' => 'get',
+        'http-method' => 'GET',
+        'precond' => array(
+            'Pluf_Precondition::ownerRequired'
+        )
+    ),
+    array(
+        'regex' => '#^/(?P<modelId>\d+)/resources/(?P<resourcePath>.+)$#',
+        'model' => 'Spa_Views_Resources',
+        'method' => 'update',
+        'http-method' => 'POST',
+        'precond' => array(
+            'Pluf_Precondition::ownerRequired'
+        )
+    ),
+    array(
+        'regex' => '#^/(?P<modelId>\d+)/resources/(?P<resourcePath>.+)$#',
+        'model' => 'Spa_Views_Resources',
+        'method' => 'delete',
+        'http-method' => 'Delete',
+        'precond' => array(
+            'Pluf_Precondition::ownerRequired'
+        )
+    ),
+    
+    array(
+        'regex' => '#^/find$#',
+        'model' => 'Pluf_Views',
+        'method' => 'findObject',
+        'http-method' => 'GET',
+        'precond' => array(),
+        'params' => array(
+            'model' => 'Spa_SPA',
+            'listFilters' => array(
+                'id',
+                'title',
+                'symbol'
+            ),
+            'listDisplay' => array(
+                'id' => 'spa id',
+                'title' => 'title',
+                'creation_dtime' => 'creation time'
+            ),
+            '$searchFields' => array(
+                'name',
+                'title',
+                'description',
+                'homepage'
+            ),
+            'sortFields' => array(
+                'id',
+                'name',
+                'title',
+                'homepage',
+                'license',
+                'version',
+                'creation_dtime'
+            ),
+            'sortOrder' => array(
+                'creation_dtime',
+                'DESC'
+            )
+        )
+    ),
+    array(
+        'regex' => '#^/(?P<modelId>\d+)$#',
+        'model' => 'Pluf_Views',
+        'method' => 'getObject',
+        'http-method' => 'GET',
+        'precond' => array(),
+        'params' => array(
+            'model' => 'Spa_SPA'
+        )
+    ),
+    array(
+        'regex' => '#^/new$#',
+        'model' => 'Spa_Views',
+        'method' => 'create',
+        'http-method' => 'POST',
+        'precond' => array(
+            'Pluf_Precondition::ownerRequired'
+        )
+    ),
+    array(
+        'regex' => '#^/(?P<spaId>.+)$#',
+        'model' => 'Spa_Views',
+        'method' => 'update',
+        'http-method' => 'POST',
+        'precond' => array(
+            'Pluf_Precondition::ownerRequired'
+        )
+    ),
+    array(
+        'regex' => '#^/(?P<spaId>.+)$#',
+        'model' => 'Spa_Views',
+        'method' => 'delete',
+        'http-method' => 'DELETE',
+        'precond' => array(
+            'Pluf_Precondition::ownerRequired'
+        )
+    )
 );
