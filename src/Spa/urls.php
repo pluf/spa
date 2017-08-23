@@ -19,7 +19,7 @@
 return array(
     
     array(
-        'regex' => '#^/repository/(?P<modelId>.+)/states$#',
+        'regex' => '#^/repository/(?P<modelId>.+)/states/find$#',
         'model' => 'Spa_Views_Repository_States',
         'method' => 'find',
         'http-method' => 'GET',
@@ -97,7 +97,7 @@ return array(
     ),
     
     array(
-        'regex' => '#^/(?P<modelId>\d+)/resources$#',
+        'regex' => '#^/(?P<modelId>\d+)/resources/find$#',
         'model' => 'Spa_Views_Resources',
         'method' => 'find',
         'http-method' => 'GET',
