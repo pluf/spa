@@ -19,8 +19,8 @@ class Spa_SPA_Manager_Remote implements Spa_SPA_Manager
         // State
         'Published' => array(
             'install' => array(
-                'next' => 'Enable',
-                'visible' => false,
+                'next' => 'Published',
+                'visible' => true,
                 'preconditions' => array(
                     'Pluf_Precondition::isOwner'
                 ),
