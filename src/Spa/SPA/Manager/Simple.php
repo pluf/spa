@@ -18,7 +18,11 @@ class Spa_SPA_Manager_Simple implements Spa_SPA_Manager
     static $STATE_MACHINE = array(
         Workflow_Machine::STATE_UNDEFINED => array(
             'next' => 'Enable',
-            'visible' => false
+            'visible' => false,
+            'action' => array(
+                'Spa_SPA_Manager_Simple',
+                'init'
+            ),
         ),
         // State
         'Enable' => array(
@@ -91,13 +95,12 @@ class Spa_SPA_Manager_Simple implements Spa_SPA_Manager
     public function apply($spa, $action)
     {
         $machine = new Workflow_Machine();
-        $machine->setStates(self::$STATE_MACHINE)
+        return $machine->setStates(self::$STATE_MACHINE)
             ->setSignals(array(
             'Spa_SPA::stateChange'
         ))
             ->setProperty('state')
             ->apply($spa, $action);
-        return true;
     }
 
     /**
@@ -160,7 +163,20 @@ class Spa_SPA_Manager_Simple implements Spa_SPA_Manager
      * @return Spa_SPA
      */
     public static function delete($request, $object) {
-        $object->delete;
+        $object->delete();
+        return $object;
+    }
+    
+    /**
+     * Reutn init object
+     * 
+     * @param Pluf_HTTP_Request $request
+     * @param Spa_SPA $object
+     * @return Spa_SPA
+     */
+    public static function init($request, $object) {
+        $object->state = 'Enable';
+        $object->update();
         return $object;
     }
 }

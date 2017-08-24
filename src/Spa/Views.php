@@ -19,6 +19,7 @@
 Pluf::loadFunction('Pluf_Shortcuts_GetObjectOr404');
 Pluf::loadFunction('Pluf_Shortcuts_GetFormForModel');
 Pluf::loadFunction('Pluf_Form_Field_File_moveToUploadFolder');
+Pluf::loadFunction('Spa_Shortcuts_SpaManager');
 
 /**
  * لایه نمایش مدیریت گروه‌ها را به صورت پیش فرض ایجاد می‌کند
@@ -49,7 +50,8 @@ class Spa_Views extends Pluf_Views
             'upload_path_create' => true,
             'upload_overwrite' => true
         ));
-        return Spa_Service::installFromFile(Pluf::f('temp_folder', '/tmp') . '/' . $key . '.zip', true);
+        $spa = Spa_Service::installFromFile(Pluf::f('temp_folder', '/tmp') . '/' . $key . '.zip', true);
+        return Spa_Shortcuts_SpaManager($spa)->apply($spa, 'create');
     }
 
     /**
