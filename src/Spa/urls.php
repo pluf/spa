@@ -18,58 +18,9 @@
  */
 return array(
     
-    array(
-        'regex' => '#^/repository/(?P<modelId>.+)/states$#',
-        'model' => 'Spa_Views_Repository_States',
-        'method' => 'find',
-        'http-method' => 'GET',
-        'precond' => array(
-            'Pluf_Precondition::ownerRequired'
-        )
-    ),
-    array(
-        'regex' => '#^/repository/(?P<modelId>.+)/states/(?P<stateId>.+)$#',
-        'model' => 'Spa_Views_Repository_States',
-        'method' => 'get',
-        'http-method' => 'GET',
-        'precond' => array(
-            'Pluf_Precondition::ownerRequired'
-        )
-    ),
-    array(
-        'regex' => '#^/repository/(?P<modelId>\d+)/states/(?P<stateId>.+)$#',
-        'model' => 'Spa_Views_Repository_States',
-        'method' => 'put',
-        'http-method' => 'PUT',
-        'precond' => array(
-            'Pluf_Precondition::ownerRequired'
-        )
-    ),
-    
     
     array(
-        'regex' => '#^/repository/find$#',
-        'model' => 'Spa_Views_Repository',
-        'method' => 'find',
-        'http-method' => 'GET',
-        'precond' => array(
-            'Pluf_Precondition::ownerRequired'
-        )
-    ),
-    array(
-        'regex' => '#^/repository/(?P<modelId>.+)$#',
-        'model' => 'Spa_Views_Repository',
-        'method' => 'get',
-        'http-method' => 'GET',
-        'precond' => array(
-            'Pluf_Precondition::ownerRequired'
-        )
-    ),
-    
-    
-    
-    array(
-        'regex' => '#^/(?P<modelId>\d+)/states$#',
+        'regex' => '#^/(?P<modelId>\d+)/states/find$#',
         'model' => 'Spa_Views_States',
         'method' => 'find',
         'http-method' => 'GET',
@@ -97,7 +48,7 @@ return array(
     ),
     
     array(
-        'regex' => '#^/(?P<modelId>\d+)/resources$#',
+        'regex' => '#^/(?P<modelId>\d+)/resources/find$#',
         'model' => 'Spa_Views_Resources',
         'method' => 'find',
         'http-method' => 'GET',
