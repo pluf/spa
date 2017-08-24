@@ -53,6 +53,10 @@ class Spa_SPA_Manager_Simple implements Spa_SPA_Manager
             'delete' => array(
                 'next' => 'Deleted',
                 'visible' => true,
+                'action' => array(
+                    'Spa_SPA_Manager_Simple',
+                    'delete'
+                ),
                 'preconditions' => array(
                     'Pluf_Precondition::isOwner'
                 )
@@ -146,5 +150,17 @@ class Spa_SPA_Manager_Simple implements Spa_SPA_Manager
             'sink' => $file
         ]);
         return Spa_Service::updateFromFile($object, $file, true);
+    }
+    
+    /**
+     * Reutn deleted object
+     * 
+     * @param Pluf_HTTP_Request $request
+     * @param Spa_SPA $object
+     * @return Spa_SPA
+     */
+    public static function delete($request, $object) {
+        $object->delete;
+        return $object;
     }
 }
