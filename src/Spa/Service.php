@@ -26,7 +26,7 @@
 class Spa_Service
 {
 
-    public static function getNotfoundSpa ()
+    public static function getNotfoundSpa()
     {
         $name = 'not-found';
         $spa = Spa_SPA::getSpaByName($name);
@@ -39,15 +39,29 @@ class Spa_Service
     /**
      * Install spa from file into the tenant.
      *
-     * @param String $path            
-     * @param string $deleteFile            
+     * @param String $path
+     * @param string $deleteFile
      * @throws Pluf_Exception
      */
-    public static function installFromFile ($path, $deleteFile = false)
+    public static function installFromFile($path, $deleteFile = false)
+    {
+        // crate spa
+        $spa = new Spa_SPA();
+        $spa->path = 'not/set';
+        $spa->name = 'spa-' . rand();
+        $spa->create();
+        try {
+            return self::updateFromFile($spa, $path, $deleteFile);
+        } catch (Exception $ex) {
+            $spa->delete();
+            throw $ex;
+        }
+    }
+
+    public static function updateFromFile($spa, $path, $deleteFile = false)
     {
         // Temp folder
-        $key = 'spa-' .
-                 md5(microtime() . rand(0, 123456789) . Pluf::f('secret_key'));
+        $key = 'spa-' . md5(microtime() . rand(0, 123456789));
         $dir = Pluf_Tenant::storagePath() . '/spa/' . $key;
         if (! mkdir($dir, 0777, true)) {
             throw new Pluf_Exception('Failed to create folder in temp');
@@ -72,12 +86,8 @@ class Spa_Service
         fclose($myfile);
         $package = json_decode($json, true);
         
-        // 3- crate spa
-        $spa = new Spa_SPA();
-        $spa->path = 'not/set';
+        // update spa
         $spa->setFromFormData($package);
-        $spa->create();
-        
         $spa->path = Pluf_Tenant::storagePath() . '/spa/' . $spa->id;
         $spa->update();
         

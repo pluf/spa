@@ -19,6 +19,7 @@
 Pluf::loadFunction('Pluf_Shortcuts_GetObjectOr404');
 Pluf::loadFunction('Pluf_Shortcuts_GetFormForModel');
 Pluf::loadFunction('Pluf_Form_Field_File_moveToUploadFolder');
+Pluf::loadFunction('Spa_Shortcuts_SpaManager');
 
 /**
  * لایه نمایش مدیریت گروه‌ها را به صورت پیش فرض ایجاد می‌کند
@@ -36,71 +37,49 @@ class Spa_Views extends Pluf_Views
      * اطلاعات از توی فایل برداشته می‌شه. این فایل باید ساختار نرم افزارهای ما
      * رو داشته باشه.
      *
-     * @param unknown_type $request            
-     * @param unknown_type $match            
+     * @param Pluf_HTTP_Request $request
+     * @param array $match
      */
-    public function create ($request, $match)
+    public function create($request, $match)
     {
         // 1- upload & extract
         $key = 'spa-' . md5(microtime() . rand(0, 123456789));
-        Pluf_Form_Field_File_moveToUploadFolder($request->FILES['file'], 
-                array(
-                        'file_name' => $key . '.zip',
-                        'upload_path' => Pluf::f('temp_folder', '/tmp'),
-                        'upload_path_create' => true,
-                        'upload_overwrite' => true
-                ));
-        $spa = Spa_Service::installFromFile(
-                Pluf::f('temp_folder', '/tmp') . '/' . $key . '.zip', true);
-        return new Pluf_HTTP_Response_Json($spa);
+        Pluf_Form_Field_File_moveToUploadFolder($request->FILES['file'], array(
+            'file_name' => $key . '.zip',
+            'upload_path' => Pluf::f('temp_folder', '/tmp'),
+            'upload_path_create' => true,
+            'upload_overwrite' => true
+        ));
+        $spa = Spa_Service::installFromFile(Pluf::f('temp_folder', '/tmp') . '/' . $key . '.zip', true);
+        return Spa_Shortcuts_SpaManager($spa)->apply($spa, 'create');
     }
 
     /**
      *
-     * @param unknown_type $request            
-     * @param unknown_type $match            
+     * @param Pluf_HTTP_Request $request
+     * @param array $match
      */
-    public function update ($request, $match)
+    public function update($request, $match)
     {
+        $key = 'spa-' . md5(microtime() . rand(0, 123456789));
         $spa = Pluf_Shortcuts_GetObjectOr404('Spa_SPA', $match['spaId']);
         Spa_Views::remdir($spa->path);
         // 1- upload & extract
-        Pluf_Form_Field_File_moveToUploadFolder($request->FILES['file'], 
-                array(
-                        'file_name' => 'spa.zip',
-                        'upload_path' => $spa->path,
-                        'upload_path_create' => true,
-                        'upload_overwrite' => true
-                ));
-        $zip = new ZipArchive();
-        if ($zip->open($spa->path . '/spa.zip') === TRUE) {
-            $zip->extractTo($spa->path);
-            $zip->close();
-        } else {
-            throw new Pluf_Exception('fail to extract zip package');
-        }
-        unlink($spa->path . '/spa.zip');
-        
-        // 2- load infor
-        $filename = $spa->path . '/' . Pluf::f('spa_config', "spa.json");
-        $myfile = fopen($filename, "r") or die("Unable to open file!");
-        $json = fread($myfile, filesize($filename));
-        fclose($myfile);
-        $package = json_decode($json, true);
-        
-        // 3- update spa
-        $spa->setFromFormData($package);
-        $spa->update();
-        
-        return new Pluf_HTTP_Response_Json($spa);
+        Pluf_Form_Field_File_moveToUploadFolder($request->FILES['file'], array(
+            'file_name' => $key,
+            'upload_path' => Pluf::f('temp_folder', '/tmp'),
+            'upload_path_create' => true,
+            'upload_overwrite' => true
+        ));
+        return Spa_Service::updateFromFile($spa, $path, true);
     }
 
     /**
      *
-     * @param unknown_type $request            
-     * @param unknown_type $match            
+     * @param Pluf_HTTP_Request $request
+     * @param array $match
      */
-    public function delete ($request, $match)
+    public function delete($request, $match)
     {
         $spa = Pluf_Shortcuts_GetObjectOr404('Spa_SPA', $match['spaId']);
         Pluf_FileUtil::removedir($spa->path);

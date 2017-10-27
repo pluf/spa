@@ -30,7 +30,7 @@ class Spa_SPA extends Pluf_Model
      * دایرکتوری ریشه spa که حاوی فایل spa.json و سایر فایل‌ها و پوشه‌های spa
      * است
      *
-     * @var rootPath
+     * @var String rootPath
      */
     var $rootPath = null;
 
@@ -47,6 +47,13 @@ class Spa_SPA extends Pluf_Model
                         'type' => 'Pluf_DB_Field_Sequence',
                         'blank' => true
                 ),
+                'state' => array(
+                        'type' => 'Pluf_DB_Field_Varchar',
+                        'blank' => false,
+                        'size' => 50,
+                        'readable' => true,
+                        'editable' => false
+                ),
                 'name' => array(
                         'type' => 'Pluf_DB_Field_Varchar',
                         'blank' => false,
@@ -55,6 +62,13 @@ class Spa_SPA extends Pluf_Model
                         'editable' => false
                 ),
                 'version' => array(
+                        'type' => 'Pluf_DB_Field_Varchar',
+                        'blank' => false,
+                        'size' => 100,
+                        'readable' => true,
+                        'editable' => false
+                ),
+                'last_version' => array(
                         'type' => 'Pluf_DB_Field_Varchar',
                         'blank' => false,
                         'size' => 100,
@@ -135,7 +149,7 @@ class Spa_SPA extends Pluf_Model
     /**
      * پیش ذخیره را انجام می‌دهد
      *
-     * @param $create حالت
+     * @param $create boolean
      *            ساخت یا به روز رسانی را تعیین می‌کند
      */
     function preSave ($create = false)
@@ -214,7 +228,7 @@ class Spa_SPA extends Pluf_Model
     /**
      * مسیر فایل منبع از نرم افزار را تعیین می‌کند.
      *
-     * @param unknown $name            
+     * @param String $name            
      * @return string
      */
     public function getResourcePath ($name)
