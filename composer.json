@@ -17,9 +17,13 @@
 	],
 	"minimum-stability" : "stable",
 	"require" : {
-		"pluf/core" : "^2.0.2",
-		"pluf/workflow" : "^2.0.2",
+		"pluf/core" : "^2.1.0",
+		"pluf/workflow" : "^2.1.0",
 		"guzzlehttp/guzzle" : "^6.2.0"
+	},
+	"require-dev" : {
+		"pluf/test" : "^2.1.0",
+		"pluf/user" : "^2.1.0"
 	},
 	"include-path" : [
 		"src/"
