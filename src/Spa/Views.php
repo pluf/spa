@@ -61,19 +61,27 @@ class Spa_Views extends Pluf_Views
      */
     public function update($request, $match)
     {
-        $key = 'spa-' . md5(microtime() . rand(0, 123456789));
-        $spa = Pluf_Shortcuts_GetObjectOr404('Spa_SPA', $match['spaId']);
-        Pluf_FileUtil::removedir($spa->path);
-        // 1- upload & extract
-        Pluf_Form_Field_File_moveToUploadFolder($request->FILES['file'], array(
-            'file_name' => $key . '.zip',
-            'upload_path' => Pluf::f('temp_folder', '/tmp'),
-            'upload_path_create' => true,
-            'upload_overwrite' => true
-        ));
-        $zipPath = Pluf::f('temp_folder', '/tmp') . '/' . $key . '.zip';
-        $spa = Spa_Service::updateFromFile($spa, $zipPath, true);
-        return Spa_Shortcuts_SpaManager($spa)->apply($spa, 'update');
+        if(array_key_exists('file', $request->FILES)){
+            $key = 'spa-' . md5(microtime() . rand(0, 123456789));
+            $spa = Pluf_Shortcuts_GetObjectOr404('Spa_SPA', $match['modelId']);
+            Pluf_FileUtil::removedir($spa->path);
+            // 1- upload & extract
+            Pluf_Form_Field_File_moveToUploadFolder($request->FILES['file'], array(
+                'file_name' => $key . '.zip',
+                'upload_path' => Pluf::f('temp_folder', '/tmp'),
+                'upload_path_create' => true,
+                'upload_overwrite' => true
+            ));
+            $zipPath = Pluf::f('temp_folder', '/tmp') . '/' . $key . '.zip';
+            $spa = Spa_Service::updateFromFile($spa, $zipPath, true);
+            return Spa_Shortcuts_SpaManager($spa)->apply($spa, 'update');
+        }else{
+            $pw = new Pluf_Views();
+            $p = array(
+                'model' => 'Spa_SPA'
+            );
+            return $pw->updateObject($request, $match, $p);
+        }
     }
 
     /**
