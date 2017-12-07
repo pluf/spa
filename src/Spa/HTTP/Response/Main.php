@@ -44,8 +44,10 @@ class Spa_HTTP_Response_Main extends Pluf_HTTP_Response
     function render($output_body = true)
     {
         $content = file_get_contents($this->filePath);
-        $baseStr = $this->spaName === null ? '<base href="/">' : '<base href="/' . $this->spaName . '/">';
-        $this->content = preg_replace('/<!— injector:base —>[\s\S]*<!— endinjector —>/', $baseStr, $content);
+        $basePath = $this->spaName === null ? '/' : '/'. $this->spaName . '/';
+        $content = preg_replace('/<!--\sinjector:base-tag\s-->[\s\S]*<!--\sendinjector\s-->/', '<base href="' . $basePath . '">', $content);
+        $content = preg_replace('/<!--\sinjector:base-path\s-->[\s\S]*<!--\sendinjector\s-->/', $basePath, $content);
+        $this->content = $content;
         parent::render($output_body);
     }
 }

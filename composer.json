@@ -19,6 +19,8 @@
 	"require" : {
 		"pluf/core" : "^2.1.0",
 		"pluf/workflow" : "^2.1.0",
+		"pluf/setting" : "^2.1.0",
+		"pluf/config" : "^2.1.0",
 		"guzzlehttp/guzzle" : "^6.2.0"
 	},
 	"require-dev" : {
