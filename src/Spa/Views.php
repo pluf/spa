@@ -63,15 +63,17 @@ class Spa_Views extends Pluf_Views
     {
         $key = 'spa-' . md5(microtime() . rand(0, 123456789));
         $spa = Pluf_Shortcuts_GetObjectOr404('Spa_SPA', $match['spaId']);
-        Spa_Views::remdir($spa->path);
+        Pluf_FileUtil::removedir($spa->path);
         // 1- upload & extract
         Pluf_Form_Field_File_moveToUploadFolder($request->FILES['file'], array(
-            'file_name' => $key,
+            'file_name' => $key . '.zip',
             'upload_path' => Pluf::f('temp_folder', '/tmp'),
             'upload_path_create' => true,
             'upload_overwrite' => true
         ));
-        return Spa_Service::updateFromFile($spa, $path, true);
+        $zipPath = Pluf::f('temp_folder', '/tmp') . '/' . $key . '.zip';
+        $spa = Spa_Service::updateFromFile($spa, $zipPath, true);
+        return Spa_Shortcuts_SpaManager($spa)->apply($spa, 'update');
     }
 
     /**
