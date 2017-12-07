@@ -152,7 +152,7 @@ return array(
         )
     ),
     array(
-        'regex' => '#^/(?P<spaId>.+)$#',
+        'regex' => '#^/(?P<modelId>.+)$#',
         'model' => 'Spa_Views',
         'method' => 'update',
         'http-method' => 'POST',

@@ -50,8 +50,13 @@ class Spa_Views_Run
         } else { // first part is not an SPA so use default SPA
             $name = Setting_Service::get('spa.default', 'not-found');
             $spa = Spa_SPA::getSpaByName($name);
+            if($spa === null){
+                $spa = Spa_Service::getNotfoundSpa();
+                $spaName = 'not-found';
+            }else{                
+                $spaName = null;
+            }
             $path = $firstPart . '/' . $remainPart;
-            $spaName = null;
         }
         if (preg_match('/.+\.[a-zA-Z0-9]+$/', $path)) {
             // Looking for file in SPA
