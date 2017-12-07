@@ -24,7 +24,7 @@ class Spa_Views_Run
             $spa = Spa_Service::getNotfoundSpa();
         }
         $resPath = $spa->getMainPagePath();
-        return new Pluf_HTTP_Response_File($resPath, Pluf_FileUtil::getMimeType($resPath));
+        return new Spa_HTTP_Response_Main($resPath, Pluf_FileUtil::getMimeType($resPath));
     }
 
     /**
@@ -46,20 +46,28 @@ class Spa_Views_Run
         $spa = Spa_SPA::getSpaByName($firstPart);
         if (isset($spa)) { // SPA is valid
             $path = $remainPart;
+            $spaName = $firstPart;
         } else { // first part is not an SPA so use default SPA
             $name = Setting_Service::get('spa.default', 'not-found');
             $spa = Spa_SPA::getSpaByName($name);
             $path = $firstPart . '/' . $remainPart;
+            $spaName = null;
         }
-        if (preg_match('.+\.[a-zA-Z0-9]+$', $path)) {
+        if (preg_match('/.+\.[a-zA-Z0-9]+$/', $path)) {
             // Looking for file in SPA
             $resPath = $spa->getResourcePath($path);
+            $isMain = false;
         } else {
             // Request is for main file (path is an internal state)
             $resPath = $spa->getMainPagePath();
+            $isMain = true;
         }
         if (file_exists($resPath)) {
-            return new Pluf_HTTP_Response_File($resPath, Pluf_FileUtil::getMimeType($resPath));
+            if ($isMain) {
+                return new Spa_HTTP_Response_Main($resPath, Pluf_FileUtil::getMimeType($resPath), $spaName);
+            } else {
+                return new Pluf_HTTP_Response_File($resPath, Pluf_FileUtil::getMimeType($resPath));
+            }
         }
         
         $spa = Spa_Service::getNotfoundSpa();
@@ -75,6 +83,6 @@ class Spa_Views_Run
         
         // not found spa main page
         $resPath = $spa->getMainPagePath();
-        return new Pluf_HTTP_Response_File($resPath, Pluf_FileUtil::getMimeType($resPath));
+        return new Spa_HTTP_Response_Main($resPath, Pluf_FileUtil::getMimeType($resPath), 'not-found');
     }
 }
