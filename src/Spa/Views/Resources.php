@@ -15,6 +15,14 @@ class Spa_Views_Resources extends Pluf_Views
      */
     public function create($request, $match)
     {}
+    
+    /**
+     *
+     * @param Pluf_HTTP_Request $request
+     * @param array $match
+     */
+    public function find($request, $match)
+    {}
 
     /**
      *
