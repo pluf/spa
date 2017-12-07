@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of Pluf Framework, a simple PHP Application Framework.
  * Copyright (C) 2010-2020 Phoinex Scholars Co. (http://dpq.co.ir)
@@ -17,6 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+Pluf::loadFunction('Spa_Shortcuts_SpaManager');
 
 /**
  *
@@ -31,7 +31,8 @@ class Spa_Service
         $name = 'not-found';
         $spa = Spa_SPA::getSpaByName($name);
         if (! isset($spa)) {
-            return self::installFromFile(__DIR__ . '/resources/not-found-0.1.1.zip');
+            $spa = self::installFromFile(__DIR__ . '/resources/not-found-0.1.1.zip');
+            return Spa_Shortcuts_SpaManager($spa)->apply($spa, 'create');
         }
         return $spa;
     }
