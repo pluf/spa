@@ -27,7 +27,7 @@ return array(
     // resource from default spa: /path/to/resource
     // resource form specified spa: /spa-name/path/to/resource
     array(
-        'regex' => '#^/(?P<firsPart>[^/]+)/(?P<remainPart>.*)$#',
+        'regex' => '#^/(?P<firstPart>[^/]+)/(?P<remainPart>.*)$#',
         'model' => 'Spa_Views_Run',
         'method' => 'loadResource'
     ),

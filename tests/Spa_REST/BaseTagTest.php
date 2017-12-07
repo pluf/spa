@@ -24,7 +24,7 @@ require_once 'Pluf.php';
  * @backupGlobals disabled
  * @backupStaticAttributes disabled
  */
-class Spa_REST_ResourcesTest extends TestCase
+class Spa_REST_BaseTagTest extends TestCase
 {
 
     private static $client = null;
@@ -73,7 +73,7 @@ class Spa_REST_ResourcesTest extends TestCase
             'db_password' => '',
             'db_server' => 'localhost',
             'db_database' => 'test',
-            'db_table_prefix' => '_test_spa_rest_',
+            'db_table_prefix' => '_test_basetag_rest_',
             
             'mail_backend' => 'mail',
             'user_avatar_default' => dirname(__FILE__) . '/../conf/avatar.svg'
@@ -147,64 +147,42 @@ class Spa_REST_ResourcesTest extends TestCase
         $response = self::$client->get('/');
         Test_Assert::assertResponseNotNull($response, 'Fail to load main file of default tenant');
         Test_Assert::assertResponseStatusCode($response, 200, 'Result status code is not 200');
-        Test_Assert::assertTrue(preg_match('/.*\/main\.json$/', $response->filePath) === 1, 'File path is not correct');
+        Test_Assert::assertEquals('<base href="/">', $response->content, 'Base tag replacement is not correct');
     }
     
     /**
      * @test
      */
-    public function getResourceOfDefaultSpa()
+    public function getFakeFileOfDefaultSpa()
     {
-        $response = self::$client->get('/folder/main.json');
-        Test_Assert::assertResponseNotNull($response, 'Fail to load resource of default tenant');
-        Test_Assert::assertResponseStatusCode($response, 200, 'Result status code is not 200');
-        Test_Assert::assertTrue(preg_match('/.*\/folder\/main\.json$/', $response->content) === 1, 'File path is not correct');
-    }
-    
-    
-    /**
-     * @test
-     */
-    public function getMainFileOfTestSpa()
-    {
-        $response = self::$client->get('/testResource/');
+        $response = self::$client->get('/alaki/path');
         Test_Assert::assertResponseNotNull($response, 'Fail to load main file of default tenant');
         Test_Assert::assertResponseStatusCode($response, 200, 'Result status code is not 200');
-        Test_Assert::assertTrue(preg_match('/.*\/index\.html$/', $response->filePath) === 1, 'File path is not correct');
+        Test_Assert::assertEquals('<base href="/">', $response->content, 'Base tag replacement is not correct');
     }
     
     /**
      * @test
      */
-    public function getResourceOfTestSpa()
+    public function getMainFileOfSpa()
     {
-        $response = self::$client->get('/testResource/folder/resource.json');
-        Test_Assert::assertResponseNotNull($response, 'Fail to load resource of default tenant');
-        Test_Assert::assertResponseStatusCode($response, 200, 'Result status code is not 200');
-        Test_Assert::assertTrue(preg_match('/.*\/folder\/resource\.json$/', $response->content) === 1, 'File path is not correct');
-    }
-    
-    /**
-     * @test
-     */
-    public function getInternalStateOfDefaultSpa()
-    {
-        $response = self::$client->get('/content/test');
+        $response = self::$client->get('/testDefault/');
         Test_Assert::assertResponseNotNull($response, 'Fail to load main file of default tenant');
         Test_Assert::assertResponseStatusCode($response, 200, 'Result status code is not 200');
-        Test_Assert::assertTrue(preg_match('/.*\/main\.json$/', $response->filePath) === 1, 'File path is not correct');
+        Test_Assert::assertEquals('<base href="/testDefault/">', $response->content, 'Base tag replacement is not correct');
     }
     
     /**
      * @test
      */
-    public function getInternalStateOfTestSpa()
+    public function getFakeFileOfSpa()
     {
-        $response = self::$client->get('/testResource/content/test');
-        Test_Assert::assertResponseNotNull($response, 'Fail to load resource of default tenant');
+        $response = self::$client->get('/testDefault/alaki/path');
+        Test_Assert::assertResponseNotNull($response, 'Fail to load main file of default tenant');
         Test_Assert::assertResponseStatusCode($response, 200, 'Result status code is not 200');
-        Test_Assert::assertTrue(preg_match('/.*\/index\.html$/', $response->filePath) === 1, 'File path is not correct');
+        Test_Assert::assertEquals('<base href="/testDefault/">', $response->content, 'Base tag replacement is not correct');
     }
+    
 }
 
 
