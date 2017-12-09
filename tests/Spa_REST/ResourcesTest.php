@@ -205,6 +205,15 @@ class Spa_REST_ResourcesTest extends TestCase
         Test_Assert::assertResponseStatusCode($response, 200, 'Result status code is not 200');
         Test_Assert::assertTrue(preg_match('/.*\/index\.html$/', $response->filePath) === 1, 'File path is not correct');
     }
+    
+    /**
+     * @expectedException Pluf_Exception
+     * @test
+     */
+    public function shouldThrowExceptionFoNotFoundResource()
+    {
+            self::$client->get('/appendixes.annotations.html');
+    }
 }
 
 
