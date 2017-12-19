@@ -50,13 +50,13 @@ class Spa_Views_Run
         } else { // first part is not an SPA so use default SPA
             $name = Setting_Service::get('spa.default', 'not-found');
             $spa = Spa_SPA::getSpaByName($name);
-            if($spa === null){
+            if ($spa === null) {
                 $spa = Spa_Service::getNotfoundSpa();
                 $spaName = 'not-found';
-            }else{                
+            } else {
                 $spaName = null;
             }
-            $path = $firstPart . '/' . $remainPart;
+            $path = isset($remainPart) && ! empty($remainPart) ? $firstPart . '/' . $remainPart : $firstPart;
         }
         if (preg_match('/.+\.[a-zA-Z0-9]+$/', $path)) {
             // Looking for file in SPA
@@ -67,27 +67,10 @@ class Spa_Views_Run
             $resPath = $spa->getMainPagePath();
             $isMain = true;
         }
-        if (file_exists($resPath)) {
-            if ($isMain) {
-                return new Spa_HTTP_Response_Main($resPath, Pluf_FileUtil::getMimeType($resPath), $spaName);
-            } else {
-                return new Pluf_HTTP_Response_File($resPath, Pluf_FileUtil::getMimeType($resPath));
-            }
+        if ($isMain) {
+            return new Spa_HTTP_Response_Main($resPath, Pluf_FileUtil::getMimeType($resPath), $spaName);
+        } else {
+            return new Pluf_HTTP_Response_File($resPath, Pluf_FileUtil::getMimeType($resPath));
         }
-        
-        $spa = Spa_Service::getNotfoundSpa();
-        // Looking for file in notfound spa
-        $w = $match[0];
-        do {
-            $w = substr($w, strpos($w, '/') + 1);
-            $resPath = $spa->getResourcePath($w);
-            if (file_exists($resPath)) {
-                return new Pluf_HTTP_Response_File($resPath, Pluf_FileUtil::getMimeType($resPath));
-            }
-        } while (strpos($w, '/'));
-        
-        // not found spa main page
-        $resPath = $spa->getMainPagePath();
-        return new Spa_HTTP_Response_Main($resPath, Pluf_FileUtil::getMimeType($resPath), 'not-found');
     }
 }
