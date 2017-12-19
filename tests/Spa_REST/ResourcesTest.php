@@ -28,7 +28,7 @@ class Spa_REST_ResourcesTest extends TestCase
 {
 
     private static $client = null;
-    
+
     private static $user = null;
 
     /**
@@ -63,10 +63,6 @@ class Spa_REST_ResourcesTest extends TestCase
             'secret_key' => '5a8d7e0f2aad8bdab8f6eef725412850',
             'user_signup_active' => true,
             'user_avatra_max_size' => 2097152,
-            'auth_backends' => array(
-                'Pluf_Auth_ModelBackend'
-            ),
-            'pluf_use_rowpermission' => true,
             'db_engine' => 'MySQL',
             'db_version' => '5.5.33',
             'db_login' => 'root',
@@ -85,7 +81,7 @@ class Spa_REST_ResourcesTest extends TestCase
         ));
         $m->install();
         // Test user
-        self::$user = new Pluf_User();
+        self::$user = new User();
         self::$user->login = 'test';
         self::$user->first_name = 'test';
         self::$user->last_name = 'test';
@@ -117,7 +113,7 @@ class Spa_REST_ResourcesTest extends TestCase
                 'sub' => include 'Spa/urls-app2.php'
             )
         ));
-            
+        
         // default spa
         $path = dirname(__FILE__) . '/../resources/testDefault.zip';
         Setting_Service::set('spa.default', 'testDefault');
@@ -149,7 +145,7 @@ class Spa_REST_ResourcesTest extends TestCase
         Test_Assert::assertResponseStatusCode($response, 200, 'Result status code is not 200');
         Test_Assert::assertTrue(preg_match('/.*\/main\.json$/', $response->filePath) === 1, 'File path is not correct');
     }
-    
+
     /**
      * @test
      */
@@ -160,8 +156,7 @@ class Spa_REST_ResourcesTest extends TestCase
         Test_Assert::assertResponseStatusCode($response, 200, 'Result status code is not 200');
         Test_Assert::assertTrue(preg_match('/.*\/folder\/main\.json$/', $response->content) === 1, 'File path is not correct');
     }
-    
-    
+
     /**
      * @test
      */
@@ -172,7 +167,7 @@ class Spa_REST_ResourcesTest extends TestCase
         Test_Assert::assertResponseStatusCode($response, 200, 'Result status code is not 200');
         Test_Assert::assertTrue(preg_match('/.*\/index\.html$/', $response->filePath) === 1, 'File path is not correct');
     }
-    
+
     /**
      * @test
      */
@@ -183,7 +178,7 @@ class Spa_REST_ResourcesTest extends TestCase
         Test_Assert::assertResponseStatusCode($response, 200, 'Result status code is not 200');
         Test_Assert::assertTrue(preg_match('/.*\/folder\/resource\.json$/', $response->content) === 1, 'File path is not correct');
     }
-    
+
     /**
      * @test
      */
@@ -194,7 +189,7 @@ class Spa_REST_ResourcesTest extends TestCase
         Test_Assert::assertResponseStatusCode($response, 200, 'Result status code is not 200');
         Test_Assert::assertTrue(preg_match('/.*\/main\.json$/', $response->filePath) === 1, 'File path is not correct');
     }
-    
+
     /**
      * @test
      */
@@ -205,14 +200,14 @@ class Spa_REST_ResourcesTest extends TestCase
         Test_Assert::assertResponseStatusCode($response, 200, 'Result status code is not 200');
         Test_Assert::assertTrue(preg_match('/.*\/index\.html$/', $response->filePath) === 1, 'File path is not correct');
     }
-    
+
     /**
      * @expectedException Pluf_Exception
      * @test
      */
     public function shouldThrowExceptionFoNotFoundResource()
     {
-            self::$client->get('/appendixes.annotations.html');
+        self::$client->get('/appendixes.annotations.html');
     }
 }
 

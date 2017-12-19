@@ -25,7 +25,7 @@ return array(
         'method' => 'find',
         'http-method' => 'GET',
         'precond' => array(
-            'Pluf_Precondition::ownerRequired'
+            'User_Precondition::ownerRequired'
         )
     ),
     array(
@@ -34,7 +34,7 @@ return array(
         'method' => 'get',
         'http-method' => 'GET',
         'precond' => array(
-            'Pluf_Precondition::ownerRequired'
+            'User_Precondition::ownerRequired'
         )
     ),
     array(
@@ -43,7 +43,7 @@ return array(
         'method' => 'put',
         'http-method' => 'PUT',
         'precond' => array(
-            'Pluf_Precondition::ownerRequired'
+            'User_Precondition::ownerRequired'
         )
     ),
     
@@ -53,7 +53,7 @@ return array(
         'method' => 'find',
         'http-method' => 'GET',
         'precond' => array(
-            'Pluf_Precondition::ownerRequired'
+            'User_Precondition::ownerRequired'
         )
     ),
     array(
@@ -62,7 +62,7 @@ return array(
         'method' => 'create',
         'http-method' => 'GET',
         'precond' => array(
-            'Pluf_Precondition::ownerRequired'
+            'User_Precondition::ownerRequired'
         )
     ),
     array(
@@ -71,7 +71,7 @@ return array(
         'method' => 'get',
         'http-method' => 'GET',
         'precond' => array(
-            'Pluf_Precondition::ownerRequired'
+            'User_Precondition::ownerRequired'
         )
     ),
     array(
@@ -80,7 +80,7 @@ return array(
         'method' => 'update',
         'http-method' => 'POST',
         'precond' => array(
-            'Pluf_Precondition::ownerRequired'
+            'User_Precondition::ownerRequired'
         )
     ),
     array(
@@ -89,7 +89,7 @@ return array(
         'method' => 'delete',
         'http-method' => 'Delete',
         'precond' => array(
-            'Pluf_Precondition::ownerRequired'
+            'User_Precondition::ownerRequired'
         )
     ),
     
@@ -148,7 +148,7 @@ return array(
         'method' => 'create',
         'http-method' => 'POST',
         'precond' => array(
-            'Pluf_Precondition::ownerRequired'
+            'User_Precondition::ownerRequired'
         )
     ),
     array(
@@ -157,7 +157,7 @@ return array(
         'method' => 'update',
         'http-method' => 'POST',
         'precond' => array(
-            'Pluf_Precondition::ownerRequired'
+            'User_Precondition::ownerRequired'
         )
     ),
     array(
@@ -166,7 +166,7 @@ return array(
         'method' => 'delete',
         'http-method' => 'DELETE',
         'precond' => array(
-            'Pluf_Precondition::ownerRequired'
+            'User_Precondition::ownerRequired'
         )
     )
 );
