@@ -38,7 +38,7 @@ class Spa_SPA_Manager_Remote implements Spa_SPA_Manager
                 'next' => 'Published',
                 'visible' => true,
                 'preconditions' => array(
-                    'Pluf_Precondition::isOwner'
+                    'User_Precondition::isOwner'
                 ),
                 'action' => array(
                     'Spa_SPA_Manager_Remote',
