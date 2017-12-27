@@ -51,7 +51,7 @@ class Spa_SPA_Manager_Simple implements Spa_SPA_Manager
                     'checkUpdate'
                 ),
                 'preconditions' => array(
-                    'Pluf_Precondition::isOwner'
+                    'User_Precondition::isOwner'
                 ),
                 'properties' => array()
             ),
@@ -63,7 +63,7 @@ class Spa_SPA_Manager_Simple implements Spa_SPA_Manager
                     'update'
                 ),
                 'preconditions' => array(
-                    'Pluf_Precondition::isOwner'
+                    'User_Precondition::isOwner'
                 ),
                 'properties' => array()
             ),
@@ -79,14 +79,14 @@ class Spa_SPA_Manager_Simple implements Spa_SPA_Manager
                     'delete'
                 ),
                 'preconditions' => array(
-                    'Pluf_Precondition::isOwner'
+                    'User_Precondition::isOwner'
                 )
             ),
             'disable' => array(
                 'next' => 'Disabled',
                 'visible' => true,
                 'preconditions' => array(
-                    'Pluf_Precondition::isOwner'
+                    'User_Precondition::isOwner'
                 )
             )
         ),
