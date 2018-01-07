@@ -116,7 +116,7 @@ class Spa_REST_BasePathTest extends TestCase
             
         // default spa
         $path = dirname(__FILE__) . '/../resources/testManifest.zip';
-        Setting_Service::set('spa.default', 'testManifest');
+        Tenant_Service::setting('spa.default', 'testManifest');
         Spa_Service::installFromFile($path);
     }
 
