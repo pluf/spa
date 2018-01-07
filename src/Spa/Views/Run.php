@@ -35,7 +35,7 @@ class Spa_Views_Run
      */
     public static function defaultSpa($request, $match)
     {
-        $name = Setting_Service::get('spa.default', 'not-found');
+        $name = Tenant_Service::setting('spa.default', 'not-found');
         $spa = Spa_SPA::getSpaByName($name);
         if (! isset($spa)) {
             $spa = Spa_Service::getNotfoundSpa();
@@ -65,7 +65,7 @@ class Spa_Views_Run
             $path = $remainPart;
             $spaName = $firstPart;
         } else { // first part is not an SPA so use default SPA
-            $name = Setting_Service::get('spa.default', 'not-found');
+            $name = Tenant_Service::setting('spa.default', 'not-found');
             $spa = Spa_SPA::getSpaByName($name);
             if ($spa === null) {
                 $spa = Spa_Service::getNotfoundSpa();

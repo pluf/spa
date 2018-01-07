@@ -116,7 +116,7 @@ class Spa_REST_ResourcesTest extends TestCase
         
         // default spa
         $path = dirname(__FILE__) . '/../resources/testDefault.zip';
-        Setting_Service::set('spa.default', 'testDefault');
+        Tenant_Service::setSetting('spa.default', 'testDefault');
         Spa_Service::installFromFile($path);
         $path = dirname(__FILE__) . '/../resources/testResource.zip';
         Spa_Service::installFromFile($path);
