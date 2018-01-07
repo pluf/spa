@@ -36,50 +36,10 @@ class Spa_REST_BasicsTest extends TestCase
      */
     public static function createDataBase()
     {
-        Pluf::start(array(
-            'general_domain' => 'localhost',
-            'general_admin_email' => array(
-                'root@localhost'
-            ),
-            'general_from_email' => 'test@localhost',
-            'middleware_classes' => array(
-                'Pluf_Middleware_Session'
-            ),
-            'debug' => true,
-            'test_unit' => true,
-            'languages' => array(
-                'fa',
-                'en'
-            ),
-            'tmp_folder' => dirname(__FILE__) . '/../tmp',
-            'template_folders' => array(
-                dirname(__FILE__) . '/../templates'
-            ),
-            'upload_path' => dirname(__FILE__) . '/../tmp',
-            'template_tags' => array(),
-            'time_zone' => 'Asia/Tehran',
-            'encoding' => 'UTF-8',
-            
-            'secret_key' => '5a8d7e0f2aad8bdab8f6eef725412850',
-            'user_signup_active' => true,
-            'user_avatra_max_size' => 2097152,
-            'db_engine' => 'MySQL',
-            'db_version' => '5.5.33',
-            'db_login' => 'root',
-            'db_password' => '',
-            'db_server' => 'localhost',
-            'db_database' => 'test',
-            'db_table_prefix' => '_test_spa_rest_',
-            
-            'mail_backend' => 'mail',
-            'user_avatar_default' => dirname(__FILE__) . '/../conf/avatar.svg'
-        ));
-        $m = new Pluf_Migration(array(
-            'Pluf',
-            'User',
-            'Spa'
-        ));
+        Pluf::start(__DIR__.'/../conf/config.php');
+        $m = new Pluf_Migration(Pluf::f('installed_apps'));
         $m->install();
+        $m->init();
         // Test user
         self::$user = new User();
         self::$user->login = 'test';
@@ -114,11 +74,7 @@ class Spa_REST_BasicsTest extends TestCase
      */
     public static function removeDatabses()
     {
-        $m = new Pluf_Migration(array(
-            'Pluf',
-            'User',
-            'Spa'
-        ));
+        $m = new Pluf_Migration(Pluf::f('installed_apps'));
         $m->unInstall();
     }
 
