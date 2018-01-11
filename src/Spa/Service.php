@@ -96,4 +96,24 @@ class Spa_Service
         rename($dir, $spa->path);
         return $spa;
     }
+    
+    /**
+     * Install tenant with $id from remote repository
+     * @param string $id
+     * @return Spa_SPA
+     */
+    public static function installFromRepository($id){
+        // request param
+        $backend = Pluf::f('marketplace.backend', 'http://marketplace.webpich.com');
+        $path = '/api/marketplace/spa/' . $id . '/download';
+        $file = Pluf::f('temp_folder', '/tmp') . '/spa-' . rand();
+        // Do request
+        $client = new GuzzleHttp\Client();
+        $response = $client->request('GET', $backend . $path, [
+            'sink' => $file
+        ]);
+        
+        // install
+        return self::installFromFile($file, true);
+    }
 }

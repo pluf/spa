@@ -100,17 +100,6 @@ class Spa_SPA_Manager_Remote implements Spa_SPA_Manager
      */
     public static function install($request, $object)
     {
-        // request param
-        $backend = Pluf::f('marketplace.backend', 'http://marketplace.webpich.com');
-        $path = '/api/marketplace/spa/' . $object->id . '/download';
-        $file = Pluf::f('temp_folder', '/tmp') . '/spa-' . rand();
-        // Do request
-        $client = new GuzzleHttp\Client();
-        $response = $client->request('GET', $backend . $path, [
-            'sink' => $file
-        ]);
-        
-        // install
-        return Spa_Service::installFromFile($file, true);
+        Spa_Service::installFromRepository($objec->id);
     }
 }
