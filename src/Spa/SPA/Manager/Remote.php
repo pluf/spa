@@ -100,6 +100,7 @@ class Spa_SPA_Manager_Remote implements Spa_SPA_Manager
      */
     public static function install($request, $object)
     {
-        Spa_Service::installFromRepository($objec->id);
+        $spa = Spa_Service::installFromRepository($object->id);
+        return Spa_Shortcuts_SpaManager($spa)->apply($spa, 'create');
     }
 }
